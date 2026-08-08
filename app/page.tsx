@@ -280,26 +280,21 @@ export default function Home(): import("react").JSX.Element {
 
     text += `*Order:* ${order}%0A`;
 
-    if (order === "Dine In" && table) {
-      text += `*Table:* ${table}%0A`;
-    }
-
-    text += `*Payment:* ${payment}%0A%0A`;
-    text += `*Items*%0A`;
-    text += `━━━━━━━━━━━━━━━━━━%0A`;
-
     finalItems.forEach((item) => {
-      const itemTotal =
-  "item_name" in item
-    ? Number(item.total)
-    : Number(item.price) * Number(item.quantity);
+  const itemName =
+    "item_name" in item ? item.item_name : item.name;
 
-      const itemName =
-        "item_name" in item ? item.item_name : item.name;
+  const itemPrice = Number(item.price);
+  const itemQuantity = "item_name" in item ? item.quantity : item.quantity;
+  
+  const itemTotal =
+    "item_name" in item
+      ? Number(item.total)
+      : itemPrice * itemQuantity;
 
-      text += `${itemName}%0A`;
-      text += `${item.quantity} x ₹${item.price} = *₹${itemTotal}*%0A`;
-    });
+  text += `${itemName}%0A`;
+  text += `${itemQuantity} x ₹${itemPrice} = *₹${itemTotal}*%0A`;
+});
 
     text += `━━━━━━━━━━━━━━━━━━%0A`;
     text += `*SUBTOTAL: ₹${subtotal}*%0A`;
