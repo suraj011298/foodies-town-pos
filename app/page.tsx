@@ -290,9 +290,9 @@ export default function Home(): import("react").JSX.Element {
 
     finalItems.forEach((item) => {
       const itemTotal =
-        "total" in item
-          ? Number(item.total)
-          : Number(item.price) * Number(item.quantity);
+  "item_name" in item
+    ? Number(item.total)
+    : Number(item.price) * Number(item.quantity);
 
       const itemName =
         "item_name" in item ? item.item_name : item.name;
