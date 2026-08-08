@@ -60,7 +60,6 @@ export default function Home(): import("react").JSX.Element {
   const [orderType, setOrderType] = useState("Dine In");
   const [tableNumber, setTableNumber] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Cash");
-
   const [discount, setDiscount] = useState("");
 
   const [items, setItems] = useState<FoodItem[]>(initialItems);
@@ -71,9 +70,8 @@ export default function Home(): import("react").JSX.Element {
   const [dashboardLoading, setDashboardLoading] = useState(false);
 
   const [message, setMessage] = useState("");
-  const [messageType, setMessageType] = useState<"success" | "error">(
-    "success"
-  );
+  const [messageType, setMessageType] =
+    useState<"success" | "error">("success");
 
   const [selectedBill, setSelectedBill] = useState<Bill | null>(null);
   const [selectedBillItems, setSelectedBillItems] = useState<BillItem[]>([]);
@@ -150,25 +148,36 @@ export default function Home(): import("react").JSX.Element {
           (bill) =>
             String(bill.payment_method || "").toLowerCase() === "cash"
         )
-        .reduce((sum, bill) => sum + Number(bill.grand_total || 0), 0);
+        .reduce(
+          (sum, bill) => sum + Number(bill.grand_total || 0),
+          0
+        );
 
       const upi = rows
         .filter(
           (bill) =>
             String(bill.payment_method || "").toLowerCase() === "upi"
         )
-        .reduce((sum, bill) => sum + Number(bill.grand_total || 0), 0);
+        .reduce(
+          (sum, bill) => sum + Number(bill.grand_total || 0),
+          0
+        );
 
       const card = rows
         .filter(
           (bill) =>
             String(bill.payment_method || "").toLowerCase() === "card"
         )
-        .reduce((sum, bill) => sum + Number(bill.grand_total || 0), 0);
+        .reduce(
+          (sum, bill) => sum + Number(bill.grand_total || 0),
+          0
+        );
 
       const customers = new Set(
         rows
-          .map((bill) => bill.customer_mobile || bill.customer_name)
+          .map(
+            (bill) => bill.customer_mobile || bill.customer_name
+          )
           .filter(Boolean)
       );
 
@@ -212,7 +221,9 @@ export default function Home(): import("react").JSX.Element {
     setItems(initialItems);
   }
 
-  const selectedItems = items.filter((item) => item.quantity > 0);
+  const selectedItems = items.filter(
+    (item) => item.quantity > 0
+  );
 
   const subtotal = selectedItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -259,7 +270,9 @@ export default function Home(): import("react").JSX.Element {
     text += `━━━━━━━━━━━━━━━━━━%0A%0A`;
 
     text += `*Bill No:* ${billNumber || "-"}%0A`;
-    text += `*Customer:* ${customer || "Walk-in Customer"}%0A`;
+    text += `*Customer:* ${
+      customer || "Walk-in Customer"
+    }%0A`;
 
     if (mobile) {
       text += `*Mobile:* ${mobile}%0A`;
@@ -277,11 +290,12 @@ export default function Home(): import("react").JSX.Element {
 
     finalItems.forEach((item) => {
       const itemTotal =
-        "quantity" in item && "price" in item
-          ? Number(item.quantity) * Number(item.price)
-          : Number(item.total);
+        "total" in item
+          ? Number(item.total)
+          : Number(item.price) * Number(item.quantity);
 
-      const itemName = "item_name" in item ? item.item_name : item.name;
+      const itemName =
+        "item_name" in item ? item.item_name : item.name;
 
       text += `${itemName}%0A`;
       text += `${item.quantity} x ₹${item.price} = *₹${itemTotal}*%0A`;
@@ -340,12 +354,13 @@ export default function Home(): import("react").JSX.Element {
     setLoading(true);
 
     try {
-      const { data: lastBill, error: lastBillError } = await supabase
-        .from("bills")
-        .select("bill_number")
-        .order("bill_number", { ascending: false })
-        .limit(1)
-        .maybeSingle();
+      const { data: lastBill, error: lastBillError } =
+        await supabase
+          .from("bills")
+          .select("bill_number")
+          .order("bill_number", { ascending: false })
+          .limit(1)
+          .maybeSingle();
 
       if (lastBillError) {
         throw new Error(lastBillError.message);
@@ -374,28 +389,33 @@ export default function Home(): import("react").JSX.Element {
             });
 
           if (customerError) {
-            console.warn("Customer save:", customerError.message);
+            console.warn(
+              "Customer save:",
+              customerError.message
+            );
           }
         }
       }
 
-      const { data: billData, error: billError } = await supabase
-        .from("bills")
-        .insert({
-          bill_number: nextBillNumber,
-          customer_name: finalCustomerName,
-          customer_mobile: customerMobile.trim() || null,
-          order_type: orderType,
-          table_number:
-            orderType === "Dine In"
-              ? tableNumber.trim() || null
-              : null,
-          grand_total: total,
-          discount: discountAmount,
-          payment_method: paymentMethod,
-        })
-        .select()
-        .single();
+      const { data: billData, error: billError } =
+        await supabase
+          .from("bills")
+          .insert({
+            bill_number: nextBillNumber,
+            customer_name: finalCustomerName,
+            customer_mobile:
+              customerMobile.trim() || null,
+            order_type: orderType,
+            table_number:
+              orderType === "Dine In"
+                ? tableNumber.trim() || null
+                : null,
+            grand_total: total,
+            discount: discountAmount,
+            payment_method: paymentMethod,
+          })
+          .select()
+          .single();
 
       if (billError) {
         throw new Error(billError.message);
@@ -424,7 +444,9 @@ export default function Home(): import("react").JSX.Element {
         discountAmount
       );
 
-      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+      const whatsappUrl =
+        `https://wa.me/${WHATSAPP_NUMBER}` +
+        `?text=${whatsappMessage}`;
 
       window.open(whatsappUrl, "_blank");
 
@@ -441,14 +463,22 @@ export default function Home(): import("react").JSX.Element {
       setDiscount("");
       resetItems();
 
-      await Promise.all([loadBills(), loadDashboard()]);
-    } catch (error: any) {
+      await Promise.all([
+        loadBills(),
+        loadDashboard(),
+      ]);
+    } catch (error: unknown) {
       console.error(error);
 
       setMessageType("error");
-      setMessage(
-        error?.message || "Something went wrong while saving bill."
-      );
+
+      if (error instanceof Error) {
+        setMessage(error.message);
+      } else {
+        setMessage(
+          "Something went wrong while saving bill."
+        );
+      }
     } finally {
       setLoading(false);
     }
@@ -468,18 +498,23 @@ export default function Home(): import("react").JSX.Element {
       discountAmount
     );
 
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+    const url =
+      `https://wa.me/${WHATSAPP_NUMBER}` +
+      `?text=${text}`;
 
     window.open(url, "_blank");
   }
 
   async function viewBill(bill: Bill) {
     setSelectedBill(bill);
+    setSelectedBillItems([]);
     setShowBillModal(true);
 
     const { data, error } = await supabase
       .from("bill_items")
-      .select("id, bill_id, item_name, quantity, price, total")
+      .select(
+        "id, bill_id, item_name, quantity, price, total"
+      )
       .eq("bill_id", bill.id)
       .order("id", { ascending: true });
 
@@ -538,7 +573,10 @@ export default function Home(): import("react").JSX.Element {
       <!DOCTYPE html>
       <html>
       <head>
-        <title>Foodies Town Bill #${selectedBill.bill_number}</title>
+        <title>
+          Foodies Town Bill #${selectedBill.bill_number}
+        </title>
+
         <style>
           body {
             font-family: Arial, sans-serif;
@@ -565,7 +603,8 @@ export default function Home(): import("react").JSX.Element {
             margin-top: 20px;
           }
 
-          th, td {
+          th,
+          td {
             padding: 8px;
             border-bottom: 1px solid #ddd;
             text-align: left;
@@ -601,18 +640,35 @@ export default function Home(): import("react").JSX.Element {
 
         <div class="line"></div>
 
-        <p><b>Bill No:</b> #${selectedBill.bill_number}</p>
-        <p><b>Customer:</b> ${selectedBill.customer_name}</p>
-        <p><b>Mobile:</b> ${
-          selectedBill.customer_mobile || "-"
-        }</p>
-        <p><b>Order:</b> ${selectedBill.order_type}</p>
-        <p><b>Table:</b> ${
-          selectedBill.table_number || "-"
-        }</p>
-        <p><b>Payment:</b> ${
-          selectedBill.payment_method || "-"
-        }</p>
+        <p>
+          <b>Bill No:</b>
+          #${selectedBill.bill_number}
+        </p>
+
+        <p>
+          <b>Customer:</b>
+          ${selectedBill.customer_name}
+        </p>
+
+        <p>
+          <b>Mobile:</b>
+          ${selectedBill.customer_mobile || "-"}
+        </p>
+
+        <p>
+          <b>Order:</b>
+          ${selectedBill.order_type}
+        </p>
+
+        <p>
+          <b>Table:</b>
+          ${selectedBill.table_number || "-"}
+        </p>
+
+        <p>
+          <b>Payment:</b>
+          ${selectedBill.payment_method || "-"}
+        </p>
 
         <table>
           <thead>
@@ -632,22 +688,26 @@ export default function Home(): import("react").JSX.Element {
         <div class="amounts">
           <div class="row">
             <span>Subtotal:</span>
-            <b>₹${
-              Number(selectedBill.grand_total || 0) +
-              Number(selectedBill.discount || 0)
-            }</b>
+            <b>
+              ₹${
+                Number(selectedBill.grand_total || 0) +
+                Number(selectedBill.discount || 0)
+              }
+            </b>
           </div>
 
           <div class="row">
             <span>Discount:</span>
-            <b>-₹${Number(selectedBill.discount || 0)}</b>
+            <b>
+              -₹${Number(selectedBill.discount || 0)}
+            </b>
           </div>
 
           <div class="row grand">
             <span>Grand Total:</span>
-            <span>₹${Number(
-              selectedBill.grand_total || 0
-            )}</span>
+            <span>
+              ₹${Number(selectedBill.grand_total || 0)}
+            </span>
           </div>
         </div>
 
@@ -681,10 +741,11 @@ export default function Home(): import("react").JSX.Element {
   return (
     <main className="min-h-screen bg-slate-100 text-slate-900">
       {/* HEADER */}
+
       <header className="bg-slate-900 text-white shadow-lg">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-5">
           <div>
-            <h1 className="text-2xl font-black sm:text-3xl">
+            <h1 className="text-2xl font-black">
               🍴 Foodies Town
             </h1>
 
@@ -701,10 +762,13 @@ export default function Home(): import("react").JSX.Element {
 
       <div className="mx-auto max-w-7xl px-4 py-6">
         {/* DASHBOARD */}
+
         <section className="mb-6">
           <div className="mb-4 flex items-center justify-between">
             <div>
-              <h2 className="text-2xl font-black">Dashboard</h2>
+              <h2 className="text-2xl font-black">
+                Dashboard
+              </h2>
 
               <p className="text-sm text-slate-500">
                 Today&apos;s restaurant performance
@@ -741,7 +805,9 @@ export default function Home(): import("react").JSX.Element {
               </p>
 
               <p className="mt-2 text-3xl font-black">
-                {dashboardLoading ? "..." : dashboard.todayBills}
+                {dashboardLoading
+                  ? "..."
+                  : dashboard.todayBills}
               </p>
             </div>
 
@@ -751,7 +817,9 @@ export default function Home(): import("react").JSX.Element {
               </p>
 
               <p className="mt-2 text-3xl font-black">
-                {dashboardLoading ? "..." : dashboard.todayCustomers}
+                {dashboardLoading
+                  ? "..."
+                  : dashboard.todayCustomers}
               </p>
             </div>
 
@@ -772,6 +840,7 @@ export default function Home(): import("react").JSX.Element {
           </div>
 
           {/* PAYMENT CARDS */}
+
           <div className="mt-4 grid gap-4 sm:grid-cols-3">
             <div className="rounded-2xl bg-white p-5 shadow-sm">
               <p className="text-sm font-semibold text-slate-500">
@@ -806,6 +875,7 @@ export default function Home(): import("react").JSX.Element {
         </section>
 
         {/* MESSAGE */}
+
         {message && (
           <div
             className={`mb-5 rounded-xl border px-4 py-3 font-medium ${
@@ -819,11 +889,14 @@ export default function Home(): import("react").JSX.Element {
         )}
 
         {/* NEW BILL */}
+
         <div className="grid gap-6 lg:grid-cols-3">
           <section className="rounded-2xl bg-white p-5 shadow-sm lg:col-span-2">
             <div className="mb-5 flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-bold">New Bill</h2>
+                <h2 className="text-xl font-bold">
+                  New Bill
+                </h2>
 
                 <p className="text-sm text-slate-500">
                   Enter customer and order details
@@ -836,6 +909,7 @@ export default function Home(): import("react").JSX.Element {
             </div>
 
             {/* CUSTOMER */}
+
             <div className="grid gap-4 md:grid-cols-2">
               <div>
                 <label className="mb-1 block text-sm font-semibold">
@@ -844,7 +918,9 @@ export default function Home(): import("react").JSX.Element {
 
                 <input
                   value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
+                  onChange={(e) =>
+                    setCustomerName(e.target.value)
+                  }
                   placeholder="Enter customer name"
                   className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-orange-500"
                 />
@@ -859,7 +935,9 @@ export default function Home(): import("react").JSX.Element {
                   value={customerMobile}
                   onChange={(e) =>
                     setCustomerMobile(
-                      e.target.value.replace(/\D/g, "").slice(0, 10)
+                      e.target.value
+                        .replace(/\D/g, "")
+                        .slice(0, 10)
                     )
                   }
                   placeholder="10 digit mobile number"
@@ -876,7 +954,9 @@ export default function Home(): import("react").JSX.Element {
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
-                    onClick={() => setOrderType("Dine In")}
+                    onClick={() =>
+                      setOrderType("Dine In")
+                    }
                     className={`rounded-xl border px-4 py-3 font-semibold ${
                       orderType === "Dine In"
                         ? "border-orange-500 bg-orange-500 text-white"
@@ -888,7 +968,9 @@ export default function Home(): import("react").JSX.Element {
 
                   <button
                     type="button"
-                    onClick={() => setOrderType("Take Away")}
+                    onClick={() =>
+                      setOrderType("Take Away")
+                    }
                     className={`rounded-xl border px-4 py-3 font-semibold ${
                       orderType === "Take Away"
                         ? "border-orange-500 bg-orange-500 text-white"
@@ -907,7 +989,9 @@ export default function Home(): import("react").JSX.Element {
 
                 <input
                   value={tableNumber}
-                  onChange={(e) => setTableNumber(e.target.value)}
+                  onChange={(e) =>
+                    setTableNumber(e.target.value)
+                  }
                   disabled={orderType !== "Dine In"}
                   placeholder={
                     orderType === "Dine In"
@@ -919,34 +1003,40 @@ export default function Home(): import("react").JSX.Element {
               </div>
 
               {/* PAYMENT */}
+
               <div className="md:col-span-2">
                 <label className="mb-2 block text-sm font-semibold">
                   Payment Method
                 </label>
 
                 <div className="grid grid-cols-3 gap-2">
-                  {["Cash", "UPI", "Card"].map((method) => (
-                    <button
-                      key={method}
-                      type="button"
-                      onClick={() => setPaymentMethod(method)}
-                      className={`rounded-xl border px-4 py-3 font-bold ${
-                        paymentMethod === method
-                          ? "border-green-500 bg-green-500 text-white"
-                          : "border-slate-300 bg-white"
-                      }`}
-                    >
-                      {method === "Cash"
-                        ? "💵 Cash"
-                        : method === "UPI"
-                        ? "📱 UPI"
-                        : "💳 Card"}
-                    </button>
-                  ))}
+                  {["Cash", "UPI", "Card"].map(
+                    (method) => (
+                      <button
+                        key={method}
+                        type="button"
+                        onClick={() =>
+                          setPaymentMethod(method)
+                        }
+                        className={`rounded-xl border px-4 py-3 font-bold ${
+                          paymentMethod === method
+                            ? "border-green-500 bg-green-500 text-white"
+                            : "border-slate-300 bg-white"
+                        }`}
+                      >
+                        {method === "Cash"
+                          ? "💵 Cash"
+                          : method === "UPI"
+                          ? "📱 UPI"
+                          : "💳 Card"}
+                      </button>
+                    )
+                  )}
                 </div>
               </div>
 
               {/* DISCOUNT */}
+
               <div className="md:col-span-2">
                 <label className="mb-1 block text-sm font-semibold">
                   💸 Discount Amount
@@ -960,7 +1050,12 @@ export default function Home(): import("react").JSX.Element {
                   <input
                     value={discount}
                     onChange={(e) => {
-                      const value = e.target.value.replace(/[^\d.]/g, "");
+                      const value =
+                        e.target.value.replace(
+                          /[^\d.]/g,
+                          ""
+                        );
+
                       setDiscount(value);
                     }}
                     placeholder="Enter discount amount"
@@ -976,9 +1071,12 @@ export default function Home(): import("react").JSX.Element {
             </div>
 
             {/* FOOD ITEMS */}
+
             <div className="mt-7">
               <div className="mb-4 flex items-center justify-between">
-                <h3 className="text-lg font-bold">Food Items</h3>
+                <h3 className="text-lg font-bold">
+                  Food Items
+                </h3>
 
                 <button
                   onClick={resetItems}
@@ -999,7 +1097,9 @@ export default function Home(): import("react").JSX.Element {
                     }`}
                   >
                     <div>
-                      <p className="font-bold">{item.name}</p>
+                      <p className="font-bold">
+                        {item.name}
+                      </p>
 
                       <p className="text-sm text-slate-500">
                         ₹{item.price}
@@ -1008,7 +1108,9 @@ export default function Home(): import("react").JSX.Element {
 
                     <div className="flex items-center gap-2">
                       <button
-                        onClick={() => decreaseItem(item.id)}
+                        onClick={() =>
+                          decreaseItem(item.id)
+                        }
                         className="h-9 w-9 rounded-lg bg-slate-200 text-lg font-bold"
                       >
                         −
@@ -1019,7 +1121,9 @@ export default function Home(): import("react").JSX.Element {
                       </span>
 
                       <button
-                        onClick={() => increaseItem(item.id)}
+                        onClick={() =>
+                          increaseItem(item.id)
+                        }
                         className="h-9 w-9 rounded-lg bg-orange-500 text-lg font-bold text-white"
                       >
                         +
@@ -1032,9 +1136,12 @@ export default function Home(): import("react").JSX.Element {
           </section>
 
           {/* BILL SUMMARY */}
+
           <aside className="h-fit rounded-2xl bg-white p-5 shadow-sm lg:sticky lg:top-24">
             <div className="mb-5">
-              <h2 className="text-xl font-bold">Bill Summary</h2>
+              <h2 className="text-xl font-bold">
+                Bill Summary
+              </h2>
 
               <p className="text-sm text-slate-500">
                 Review before saving
@@ -1043,7 +1150,10 @@ export default function Home(): import("react").JSX.Element {
 
             {selectedItems.length === 0 ? (
               <div className="rounded-xl bg-slate-50 p-8 text-center text-slate-500">
-                <div className="mb-2 text-4xl">🛒</div>
+                <div className="mb-2 text-4xl">
+                  🛒
+                </div>
+
                 <p>No items selected</p>
               </div>
             ) : (
@@ -1054,7 +1164,9 @@ export default function Home(): import("react").JSX.Element {
                     className="flex justify-between border-b border-slate-100 pb-3"
                   >
                     <div>
-                      <p className="font-semibold">{item.name}</p>
+                      <p className="font-semibold">
+                        {item.name}
+                      </p>
 
                       <p className="text-xs text-slate-500">
                         {item.quantity} × ₹{item.price}
@@ -1072,11 +1184,15 @@ export default function Home(): import("react").JSX.Element {
             <div className="my-5 border-t pt-5">
               <div className="flex items-center justify-between text-slate-600">
                 <span>Subtotal</span>
-                <span className="font-bold">₹{subtotal}</span>
+
+                <span className="font-bold">
+                  ₹{subtotal}
+                </span>
               </div>
 
               <div className="mt-2 flex items-center justify-between text-green-600">
                 <span>Discount</span>
+
                 <span className="font-bold">
                   -₹{discountAmount}
                 </span>
@@ -1099,7 +1215,10 @@ export default function Home(): import("react").JSX.Element {
 
             <button
               onClick={saveBill}
-              disabled={loading || selectedItems.length === 0}
+              disabled={
+                loading ||
+                selectedItems.length === 0
+              }
               className="w-full rounded-xl bg-orange-500 px-5 py-4 text-lg font-bold text-white shadow-md hover:bg-orange-600 disabled:opacity-50"
             >
               {loading
@@ -1118,10 +1237,13 @@ export default function Home(): import("react").JSX.Element {
         </div>
 
         {/* BILL HISTORY */}
+
         <section className="mt-8 rounded-2xl bg-white p-5 shadow-sm">
           <div className="mb-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <div>
-              <h2 className="text-xl font-bold">Bill History</h2>
+              <h2 className="text-xl font-bold">
+                Bill History
+              </h2>
 
               <p className="text-sm text-slate-500">
                 View, print and share previous bills
@@ -1131,7 +1253,9 @@ export default function Home(): import("react").JSX.Element {
             <div className="flex gap-2">
               <input
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) =>
+                  setSearch(e.target.value)
+                }
                 placeholder="Search bill/customer/mobile"
                 className="rounded-xl border border-slate-300 px-4 py-2 text-sm outline-none focus:border-orange-500"
               />
@@ -1161,15 +1285,41 @@ export default function Home(): import("react").JSX.Element {
               <table className="w-full min-w-[1150px] text-left">
                 <thead>
                   <tr className="border-b bg-slate-50 text-sm">
-                    <th className="px-4 py-3">Bill</th>
-                    <th className="px-4 py-3">Date</th>
-                    <th className="px-4 py-3">Customer</th>
-                    <th className="px-4 py-3">Mobile</th>
-                    <th className="px-4 py-3">Order</th>
-                    <th className="px-4 py-3">Payment</th>
-                    <th className="px-4 py-3">Discount</th>
-                    <th className="px-4 py-3">Total</th>
-                    <th className="px-4 py-3">Actions</th>
+                    <th className="px-4 py-3">
+                      Bill
+                    </th>
+
+                    <th className="px-4 py-3">
+                      Date
+                    </th>
+
+                    <th className="px-4 py-3">
+                      Customer
+                    </th>
+
+                    <th className="px-4 py-3">
+                      Mobile
+                    </th>
+
+                    <th className="px-4 py-3">
+                      Order
+                    </th>
+
+                    <th className="px-4 py-3">
+                      Payment
+                    </th>
+
+                    <th className="px-4 py-3">
+                      Discount
+                    </th>
+
+                    <th className="px-4 py-3">
+                      Total
+                    </th>
+
+                    <th className="px-4 py-3">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
 
@@ -1206,16 +1356,24 @@ export default function Home(): import("react").JSX.Element {
                       </td>
 
                       <td className="px-4 py-3 font-semibold text-green-600">
-                        -₹{Number(bill.discount || 0)}
+                        -₹
+                        {Number(
+                          bill.discount || 0
+                        )}
                       </td>
 
                       <td className="px-4 py-3 font-black">
-                        ₹{Number(bill.grand_total || 0)}
+                        ₹
+                        {Number(
+                          bill.grand_total || 0
+                        )}
                       </td>
 
                       <td className="px-4 py-3">
                         <button
-                          onClick={() => viewBill(bill)}
+                          onClick={() =>
+                            viewBill(bill)
+                          }
                           className="rounded-lg bg-slate-900 px-3 py-2 text-xs font-bold text-white hover:bg-slate-700"
                         >
                           View
@@ -1230,11 +1388,13 @@ export default function Home(): import("react").JSX.Element {
         </section>
 
         <footer className="py-8 text-center text-sm text-slate-500">
-          © {new Date().getFullYear()} Foodies Town • Restaurant POS
+          © {new Date().getFullYear()} Foodies Town •
+          Restaurant POS
         </footer>
       </div>
 
       {/* BILL MODAL */}
+
       {showBillModal && selectedBill && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4">
           <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-2xl">
@@ -1250,7 +1410,9 @@ export default function Home(): import("react").JSX.Element {
               </div>
 
               <button
-                onClick={() => setShowBillModal(false)}
+                onClick={() =>
+                  setShowBillModal(false)
+                }
                 className="rounded-lg bg-slate-100 px-3 py-2 font-bold"
               >
                 ✕
@@ -1266,7 +1428,8 @@ export default function Home(): import("react").JSX.Element {
 
                 <p>
                   <b>Mobile:</b>{" "}
-                  {selectedBill.customer_mobile || "-"}
+                  {selectedBill.customer_mobile ||
+                    "-"}
                 </p>
 
                 <p>
@@ -1276,17 +1439,21 @@ export default function Home(): import("react").JSX.Element {
 
                 <p>
                   <b>Table:</b>{" "}
-                  {selectedBill.table_number || "-"}
+                  {selectedBill.table_number ||
+                    "-"}
                 </p>
 
                 <p>
                   <b>Payment:</b>{" "}
-                  {selectedBill.payment_method || "-"}
+                  {selectedBill.payment_method ||
+                    "-"}
                 </p>
 
                 <p>
                   <b>Date:</b>{" "}
-                  {formatDate(selectedBill.created_at)}
+                  {formatDate(
+                    selectedBill.created_at
+                  )}
                 </p>
               </div>
 
@@ -1294,36 +1461,52 @@ export default function Home(): import("react").JSX.Element {
                 <table className="w-full text-left">
                   <thead>
                     <tr className="border-b">
-                      <th className="px-2 py-3">Item</th>
-                      <th className="px-2 py-3">Qty</th>
-                      <th className="px-2 py-3">Price</th>
-                      <th className="px-2 py-3">Total</th>
+                      <th className="px-2 py-3">
+                        Item
+                      </th>
+
+                      <th className="px-2 py-3">
+                        Qty
+                      </th>
+
+                      <th className="px-2 py-3">
+                        Price
+                      </th>
+
+                      <th className="px-2 py-3">
+                        Total
+                      </th>
                     </tr>
                   </thead>
 
                   <tbody>
-                    {selectedBillItems.map((item) => (
-                      <tr
-                        key={item.id}
-                        className="border-b"
-                      >
-                        <td className="px-2 py-3 font-semibold">
-                          {item.item_name}
-                        </td>
+                    {selectedBillItems.map(
+                      (item, index) => (
+                        <tr
+                          key={
+                            item.id ??
+                            `${item.item_name}-${index}`
+                          }
+                          className="border-b"
+                        >
+                          <td className="px-2 py-3 font-semibold">
+                            {item.item_name}
+                          </td>
 
-                        <td className="px-2 py-3">
-                          {item.quantity}
-                        </td>
+                          <td className="px-2 py-3">
+                            {item.quantity}
+                          </td>
 
-                        <td className="px-2 py-3">
-                          ₹{item.price}
-                        </td>
+                          <td className="px-2 py-3">
+                            ₹{item.price}
+                          </td>
 
-                        <td className="px-2 py-3 font-bold">
-                          ₹{item.total}
-                        </td>
-                      </tr>
-                    ))}
+                          <td className="px-2 py-3 font-bold">
+                            ₹{item.total}
+                          </td>
+                        </tr>
+                      )
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -1334,8 +1517,14 @@ export default function Home(): import("react").JSX.Element {
 
                   <span className="font-bold">
                     ₹
-                    {Number(selectedBill.grand_total || 0) +
-                      Number(selectedBill.discount || 0)}
+                    {Number(
+                      selectedBill.grand_total ||
+                        0
+                    ) +
+                      Number(
+                        selectedBill.discount ||
+                          0
+                      )}
                   </span>
                 </div>
 
@@ -1343,7 +1532,10 @@ export default function Home(): import("react").JSX.Element {
                   <span>Discount</span>
 
                   <span className="font-bold">
-                    -₹{Number(selectedBill.discount || 0)}
+                    -₹
+                    {Number(
+                      selectedBill.discount || 0
+                    )}
                   </span>
                 </div>
 
@@ -1353,7 +1545,11 @@ export default function Home(): import("react").JSX.Element {
                   </span>
 
                   <span className="text-3xl font-black text-orange-600">
-                    ₹{Number(selectedBill.grand_total || 0)}
+                    ₹
+                    {Number(
+                      selectedBill.grand_total ||
+                        0
+                    )}
                   </span>
                 </div>
               </div>
