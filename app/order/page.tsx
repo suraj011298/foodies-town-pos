@@ -408,7 +408,7 @@ export default function OrderPage() {
   function createWhatsAppMessage() {
     let text = `*FOODIES TOWN*\n`;
 
-    text += `🌴 अस्सल कोकणी चव 🌴\n`;
+    text += `🌴 Pure Athentic Taste 🌴\n`;
 
     text += `====================\n`;
 
@@ -451,7 +451,7 @@ export default function OrderPage() {
 
     text += `🙏 Thank you for visiting *Foodies Town*!\n`;
 
-    text += `❤️ घरची चव • गावची माती • मनापासून सेवा`;
+    text += `❤️ Pure Athentic Taste • Authentic Konkan Taste • Family Service`;
 
     return encodeURIComponent(text);
   }
