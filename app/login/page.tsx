@@ -9,174 +9,85 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function handleLogin(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    setLoading(true);
     setError("");
+    setLoading(true);
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
+    setLoading(false);
+
     if (error) {
       setError(error.message);
-      setLoading(false);
       return;
     }
 
-    router.push("/");
+    router.replace("/");
     router.refresh();
   }
 
   return (
-    <main
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "#f3f4f6",
-        padding: "20px",
-      }}
-    >
-      <div
-        style={{
-          width: "100%",
-          maxWidth: "420px",
-          background: "#ffffff",
-          padding: "35px",
-          borderRadius: "16px",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.12)",
-        }}
-      >
-        <div style={{ textAlign: "center", marginBottom: "30px" }}>
-          <h1
-            style={{
-              margin: "0 0 8px",
-              fontSize: "30px",
-              fontWeight: "700",
-              color: "#111827",
-            }}
-          >
-            Foodies Town
-          </h1>
+    <main className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
+        <h1 className="mb-2 text-3xl font-bold text-center">
+          Foodies Town POS
+        </h1>
 
-          <p
-            style={{
-              margin: 0,
-              color: "#6b7280",
-              fontSize: "15px",
-            }}
-          >
-            POS Login
-          </p>
-        </div>
+        <p className="mb-8 text-center text-gray-500">
+          Sign in to continue
+        </p>
 
-        {error && (
-          <div
-            style={{
-              background: "#fee2e2",
-              color: "#b91c1c",
-              padding: "12px 14px",
-              borderRadius: "8px",
-              marginBottom: "20px",
-              fontSize: "14px",
-            }}
-          >
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleLogin}>
-          <div style={{ marginBottom: "18px" }}>
-            <label
-              htmlFor="email"
-              style={{
-                display: "block",
-                marginBottom: "7px",
-                fontWeight: "600",
-                color: "#374151",
-              }}
-            >
+        <form onSubmit={handleLogin} className="space-y-5">
+          <div>
+            <label className="mb-2 block text-sm font-medium">
               Email
             </label>
 
             <input
-              id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              autoComplete="email"
               required
-              style={{
-                width: "100%",
-                height: "46px",
-                padding: "0 12px",
-                border: "1px solid #d1d5db",
-                borderRadius: "8px",
-                fontSize: "15px",
-                outline: "none",
-                boxSizing: "border-box",
-              }}
+              className="w-full rounded-lg border px-4 py-3 outline-none focus:ring-2"
             />
           </div>
 
-          <div style={{ marginBottom: "24px" }}>
-            <label
-              htmlFor="password"
-              style={{
-                display: "block",
-                marginBottom: "7px",
-                fontWeight: "600",
-                color: "#374151",
-              }}
-            >
+          <div>
+            <label className="mb-2 block text-sm font-medium">
               Password
             </label>
 
             <input
-              id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              autoComplete="current-password"
               required
-              style={{
-                width: "100%",
-                height: "46px",
-                padding: "0 12px",
-                border: "1px solid #d1d5db",
-                borderRadius: "8px",
-                fontSize: "15px",
-                outline: "none",
-                boxSizing: "border-box",
-              }}
+              className="w-full rounded-lg border px-4 py-3 outline-none focus:ring-2"
             />
           </div>
+
+          {error && (
+            <div className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
+              {error}
+            </div>
+          )}
 
           <button
             type="submit"
             disabled={loading}
-            style={{
-              width: "100%",
-              height: "48px",
-              border: "none",
-              borderRadius: "8px",
-              background: loading ? "#6b7280" : "#111827",
-              color: "#ffffff",
-              fontSize: "16px",
-              fontWeight: "600",
-              cursor: loading ? "not-allowed" : "pointer",
-            }}
+            className="w-full rounded-lg bg-black px-4 py-3 font-semibold text-white disabled:opacity-50"
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
       </div>

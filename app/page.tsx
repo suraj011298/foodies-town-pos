@@ -15,6 +15,7 @@ type FoodItem = {
   name: string;
   price: number;
   quantity: number;
+  category: string;
 };
 
 type Bill = {
@@ -40,21 +41,190 @@ type BillItem = {
 };
 
 const initialItems: FoodItem[] = [
-  { id: 1, name: "Butter Naan", price: 45, quantity: 0 },
-  { id: 2, name: "Veg Manchurian", price: 220, quantity: 0 },
-  { id: 3, name: "Veg Biryani", price: 250, quantity: 0 },
-  { id: 4, name: "Paneer Butter Masala", price: 280, quantity: 0 },
-  { id: 5, name: "Dal Tadka", price: 180, quantity: 0 },
-  { id: 6, name: "Jeera Rice", price: 160, quantity: 0 },
-  { id: 7, name: "Fried Rice", price: 190, quantity: 0 },
-  { id: 8, name: "Veg Hakka Noodles", price: 200, quantity: 0 },
-  { id: 9, name: "Paneer Tikka", price: 260, quantity: 0 },
-  { id: 10, name: "Masala Papad", price: 80, quantity: 0 },
-  { id: 11, name: "Cold Drink", price: 60, quantity: 0 },
-  { id: 12, name: "Mineral Water", price: 20, quantity: 0 },
+  {
+    id: 1,
+    name: "घावणे (Ghavane) - 2 pcs",
+    price: 80,
+    quantity: 0,
+    category: "Breakfast",
+  },
+  {
+    id: 2,
+    name: "आलू पराठा (Aloo Paratha) - 2 pcs",
+    price: 80,
+    quantity: 0,
+    category: "Breakfast",
+  },
+  {
+    id: 3,
+    name: "उपमा (Upma)",
+    price: 50,
+    quantity: 0,
+    category: "Breakfast",
+  },
+  {
+    id: 4,
+    name: "पोहे (Poha)",
+    price: 50,
+    quantity: 0,
+    category: "Breakfast",
+  },
+  {
+    id: 5,
+    name: "वडा पाव (Vada Pav) - 1 pc",
+    price: 12,
+    quantity: 0,
+    category: "Breakfast",
+  },
+  {
+    id: 6,
+    name: "मिसळ पाव (Misal Pav)",
+    price: 70,
+    quantity: 0,
+    category: "Breakfast",
+  },
+  {
+    id: 7,
+    name: "ऑम्लेट पाव डबल (Omelette Pav Double)",
+    price: 50,
+    quantity: 0,
+    category: "Breakfast",
+  },
+  {
+    id: 8,
+    name: "शिरा (Sheera)",
+    price: 70,
+    quantity: 0,
+    category: "Breakfast",
+  },
+
+  {
+    id: 9,
+    name: "व्हेज प्लेट (Veg Plate)",
+    price: 200,
+    quantity: 0,
+    category: "Veg",
+  },
+
+  {
+    id: 10,
+    name: "चिकन प्लेट (Chicken Plate)",
+    price: 230,
+    quantity: 0,
+    category: "Non-Veg",
+  },
+  {
+    id: 11,
+    name: "स्पेशल चिकन प्लेट (Special Chicken Plate)",
+    price: 280,
+    quantity: 0,
+    category: "Non-Veg",
+  },
+
+  {
+    id: 12,
+    name: "फिश प्लेट (Fish Plate)",
+    price: 400,
+    quantity: 0,
+    category: "Fish",
+  },
+  {
+    id: 13,
+    name: "सुरमई करी - 2 pcs (Surmai Curry)",
+    price: 400,
+    quantity: 0,
+    category: "Fish",
+  },
+  {
+    id: 14,
+    name: "सुरमई फ्राय - 2 pcs (Surmai Fry)",
+    price: 400,
+    quantity: 0,
+    category: "Fish",
+  },
+  {
+    id: 15,
+    name: "पापलेट करी - 1 Plate (Pomfret Curry)",
+    price: 400,
+    quantity: 0,
+    category: "Fish",
+  },
+  {
+    id: 16,
+    name: "पापलेट फ्राय - 1 Plate (Pomfret Fry)",
+    price: 300,
+    quantity: 0,
+    category: "Fish",
+  },
+
+  {
+    id: 17,
+    name: "सुरमई थाळी (Surmai Thali)",
+    price: 400,
+    quantity: 0,
+    category: "Thali",
+  },
+  {
+    id: 18,
+    name: "पापलेट थाळी (Pomfret Thali)",
+    price: 450,
+    quantity: 0,
+    category: "Thali",
+  },
+
+  {
+    id: 19,
+    name: "चिकन सुक्का - 10 pcs (Chicken Sukka)",
+    price: 250,
+    quantity: 0,
+    category: "Specials",
+  },
+  {
+    id: 20,
+    name: "चिकन करी - 10 pcs (Chicken Curry)",
+    price: 280,
+    quantity: 0,
+    category: "Specials",
+  },
+  {
+    id: 21,
+    name: "मटण प्लेट (Mutton Plate)",
+    price: 500,
+    quantity: 0,
+    category: "Specials",
+  },
+
+  {
+    id: 22,
+    name: "डाळ (Dal)",
+    price: 80,
+    quantity: 0,
+    category: "Extras",
+  },
+  {
+    id: 23,
+    name: "भात (Rice)",
+    price: 80,
+    quantity: 0,
+    category: "Extras",
+  },
+  {
+    id: 24,
+    name: "मोदक (Modak)",
+    price: 40,
+    quantity: 0,
+    category: "Extras",
+  },
+  {
+    id: 25,
+    name: "पुरण पोळी (Puran Poli) - 1 pc",
+    price: 40,
+    quantity: 0,
+    category: "Extras",
+  },
 ];
 
-export default function Home(): import("react").JSX.Element {
+export default function Home() {
   const [customerName, setCustomerName] = useState("");
   const [customerMobile, setCustomerMobile] = useState("");
   const [orderType, setOrderType] = useState("Dine In");
@@ -96,21 +266,26 @@ export default function Home(): import("react").JSX.Element {
   async function loadBills() {
     setLoadingBills(true);
 
-    const { data, error } = await supabase
-      .from("bills")
-      .select(
-        "id, bill_number, customer_name, customer_mobile, order_type, table_number, grand_total, discount, payment_method, created_at"
-      )
-      .order("created_at", { ascending: false })
-      .limit(50);
+    try {
+      const { data, error } = await supabase
+        .from("bills")
+        .select(
+          "id, bill_number, customer_name, customer_mobile, order_type, table_number, grand_total, discount, payment_method, created_at"
+        )
+        .order("created_at", { ascending: false })
+        .limit(50);
 
-    if (!error && data) {
-      setBills(data as Bill[]);
-    } else if (error) {
-      console.error("Bills error:", error);
+      if (error) {
+        console.error("Bills error:", error);
+        return;
+      }
+
+      if (data) {
+        setBills(data as Bill[]);
+      }
+    } finally {
+      setLoadingBills(false);
     }
-
-    setLoadingBills(false);
   }
 
   async function loadDashboard() {
@@ -198,7 +373,10 @@ export default function Home(): import("react").JSX.Element {
     setItems((current) =>
       current.map((item) =>
         item.id === id
-          ? { ...item, quantity: item.quantity + 1 }
+          ? {
+              ...item,
+              quantity: item.quantity + 1,
+            }
           : item
       )
     );
@@ -218,7 +396,7 @@ export default function Home(): import("react").JSX.Element {
   }
 
   function resetItems() {
-    setItems(initialItems);
+    setItems(initialItems.map((item) => ({ ...item })));
   }
 
   const selectedItems = items.filter(
@@ -235,12 +413,17 @@ export default function Home(): import("react").JSX.Element {
     subtotal
   );
 
-  const total = Math.max(0, subtotal - discountAmount);
+  const total = Math.max(
+    0,
+    subtotal - discountAmount
+  );
 
   const filteredBills = useMemo(() => {
     const query = search.trim().toLowerCase();
 
-    if (!query) return bills;
+    if (!query) {
+      return bills;
+    }
 
     return bills.filter((bill) => {
       return (
@@ -264,50 +447,73 @@ export default function Home(): import("react").JSX.Element {
     table = tableNumber,
     payment = paymentMethod
   ) {
-    let text = `*FOODIES TOWN*%0A`;
-    text += `━━━━━━━━━━━━━━━━━━%0A`;
-    text += `*Restaurant Bill*%0A`;
-    text += `━━━━━━━━━━━━━━━━━━%0A%0A`;
+    let text = `*FOODIES TOWN*\n`;
+    text += `━━━━━━━━━━━━━━━━━━\n`;
+    text += `*Restaurant Bill*\n`;
+    text += `━━━━━━━━━━━━━━━━━━\n\n`;
 
-    text += `*Bill No:* ${billNumber || "-"}%0A`;
+    if (billNumber > 0) {
+      text += `*Bill No:* ${billNumber}\n`;
+    }
+
     text += `*Customer:* ${
       customer || "Walk-in Customer"
-    }%0A`;
+    }\n`;
 
     if (mobile) {
-      text += `*Mobile:* ${mobile}%0A`;
+      text += `*Mobile:* ${mobile}\n`;
     }
 
-    text += `*Order:* ${order}%0A`;
+    text += `*Order:* ${order}\n`;
+
+    if (order === "Dine In" && table) {
+      text += `*Table:* ${table}\n`;
+    }
+
+    text += `*Payment:* ${payment}\n\n`;
 
     finalItems.forEach((item) => {
-  const itemName =
-    "item_name" in item ? item.item_name : item.name;
+      const isBillItem = "item_name" in item;
 
-  const itemPrice = Number(item.price);
-  const itemQuantity = "item_name" in item ? item.quantity : item.quantity;
-  
-  const itemTotal =
-    "item_name" in item
-      ? Number(item.total)
-      : itemPrice * itemQuantity;
+      const itemName = isBillItem
+        ? item.item_name
+        : item.name;
 
-  text += `${itemName}%0A`;
-  text += `${itemQuantity} x ₹${itemPrice} = *₹${itemTotal}*%0A`;
-});
+      const itemPrice = Number(item.price);
+      const itemQuantity = Number(item.quantity);
 
-    text += `━━━━━━━━━━━━━━━━━━%0A`;
-    text += `*SUBTOTAL: ₹${subtotal}*%0A`;
+      const itemTotal = isBillItem
+        ? Number(item.total)
+        : itemPrice * itemQuantity;
+
+      text += `${itemName}\n`;
+      text += `${itemQuantity} x ₹${itemPrice} = *₹${itemTotal}*\n\n`;
+    });
+
+    const calculatedSubtotal =
+      finalItems.reduce((sum, item) => {
+        const quantity = Number(item.quantity);
+        const price = Number(item.price);
+
+        if ("item_name" in item) {
+          return sum + Number(item.total);
+        }
+
+        return sum + price * quantity;
+      }, 0);
+
+    text += `━━━━━━━━━━━━━━━━━━\n`;
+    text += `*SUBTOTAL: ₹${calculatedSubtotal}*\n`;
 
     if (finalDiscount > 0) {
-      text += `*DISCOUNT: -₹${finalDiscount}*%0A`;
+      text += `*DISCOUNT: -₹${finalDiscount}*\n`;
     }
 
-    text += `*GRAND TOTAL: ₹${finalTotal}*%0A`;
-    text += `━━━━━━━━━━━━━━━━━━%0A%0A`;
+    text += `*GRAND TOTAL: ₹${finalTotal}*\n`;
+    text += `━━━━━━━━━━━━━━━━━━\n\n`;
     text += `Thank you for visiting *Foodies Town*! ❤️`;
 
-    return text;
+    return encodeURIComponent(text);
   }
 
   async function saveBill() {
@@ -330,7 +536,9 @@ export default function Home(): import("react").JSX.Element {
       customerMobile.trim().length !== 10
     ) {
       setMessageType("error");
-      setMessage("Please enter a valid 10 digit mobile number.");
+      setMessage(
+        "Please enter a valid 10 digit mobile number."
+      );
       return;
     }
 
@@ -342,7 +550,9 @@ export default function Home(): import("react").JSX.Element {
 
     if (Number(discount) > subtotal) {
       setMessageType("error");
-      setMessage("Discount cannot be greater than subtotal.");
+      setMessage(
+        "Discount cannot be greater than subtotal."
+      );
       return;
     }
 
@@ -369,16 +579,16 @@ export default function Home(): import("react").JSX.Element {
         customerName.trim() || "Walk-in Customer";
 
       if (customerMobile.trim()) {
-        const { data: existingCustomer } = await supabase
-          .from("customers")
-          .select("id")
-          .eq("mobile", customerMobile.trim())
-          .maybeSingle();
+        const { data: existingCustomer } =
+          await supabase
+            .from("customers")
+            .select("id")
+            .eq("mobile", customerMobile.trim())
+            .maybeSingle();
 
         if (!existingCustomer) {
-          const { error: customerError } = await supabase
-            .from("customers")
-            .insert({
+          const { error: customerError } =
+            await supabase.from("customers").insert({
               name: finalCustomerName,
               mobile: customerMobile.trim(),
             });
@@ -456,6 +666,7 @@ export default function Home(): import("react").JSX.Element {
       setOrderType("Dine In");
       setPaymentMethod("Cash");
       setDiscount("");
+
       resetItems();
 
       await Promise.all([
@@ -493,11 +704,10 @@ export default function Home(): import("react").JSX.Element {
       discountAmount
     );
 
-    const url =
-      `https://wa.me/${WHATSAPP_NUMBER}` +
-      `?text=${text}`;
-
-    window.open(url, "_blank");
+    window.open(
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`,
+      "_blank"
+    );
   }
 
   async function viewBill(bill: Bill) {
@@ -521,7 +731,9 @@ export default function Home(): import("react").JSX.Element {
   }
 
   function shareSavedBill() {
-    if (!selectedBill) return;
+    if (!selectedBill) {
+      return;
+    }
 
     const text = createWhatsAppMessage(
       selectedBill.bill_number,
@@ -542,12 +754,16 @@ export default function Home(): import("react").JSX.Element {
   }
 
   function printSavedBill() {
-    if (!selectedBill) return;
+    if (!selectedBill) {
+      return;
+    }
 
     const printWindow = window.open("", "_blank");
 
     if (!printWindow) {
-      alert("Please allow pop-ups to print the bill.");
+      alert(
+        "Please allow pop-ups to print the bill."
+      );
       return;
     }
 
@@ -564,154 +780,157 @@ export default function Home(): import("react").JSX.Element {
       )
       .join("");
 
+    const subtotalForPrint =
+      Number(selectedBill.grand_total || 0) +
+      Number(selectedBill.discount || 0);
+
     printWindow.document.write(`
       <!DOCTYPE html>
       <html>
-      <head>
-        <title>
-          Foodies Town Bill #${selectedBill.bill_number}
-        </title>
+        <head>
+          <title>
+            Foodies Town Bill #${selectedBill.bill_number}
+          </title>
 
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            padding: 30px;
-            color: #111;
-          }
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              padding: 30px;
+              color: #111;
+            }
 
-          .center {
-            text-align: center;
-          }
+            .center {
+              text-align: center;
+            }
 
-          h1 {
-            margin-bottom: 4px;
-          }
+            h1 {
+              margin-bottom: 4px;
+            }
 
-          .line {
-            border-top: 1px dashed #777;
-            margin: 15px 0;
-          }
+            .line {
+              border-top: 1px dashed #777;
+              margin: 15px 0;
+            }
 
-          table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-          }
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              margin-top: 20px;
+            }
 
-          th,
-          td {
-            padding: 8px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-          }
+            th,
+            td {
+              padding: 8px;
+              border-bottom: 1px solid #ddd;
+              text-align: left;
+            }
 
-          .amounts {
-            margin-top: 20px;
-            margin-left: auto;
-            width: 280px;
-          }
+            .amounts {
+              margin-top: 20px;
+              margin-left: auto;
+              width: 280px;
+            }
 
-          .row {
-            display: flex;
-            justify-content: space-between;
-            padding: 5px 0;
-          }
+            .row {
+              display: flex;
+              justify-content: space-between;
+              padding: 5px 0;
+            }
 
-          .grand {
-            font-size: 22px;
-            font-weight: bold;
-            border-top: 1px solid #111;
-            padding-top: 10px;
-            margin-top: 8px;
-          }
-        </style>
-      </head>
+            .grand {
+              font-size: 22px;
+              font-weight: bold;
+              border-top: 1px solid #111;
+              padding-top: 10px;
+              margin-top: 8px;
+            }
+          </style>
+        </head>
 
-      <body>
-        <div class="center">
-          <h1>FOODIES TOWN</h1>
-          <div>Restaurant Bill</div>
-        </div>
-
-        <div class="line"></div>
-
-        <p>
-          <b>Bill No:</b>
-          #${selectedBill.bill_number}
-        </p>
-
-        <p>
-          <b>Customer:</b>
-          ${selectedBill.customer_name}
-        </p>
-
-        <p>
-          <b>Mobile:</b>
-          ${selectedBill.customer_mobile || "-"}
-        </p>
-
-        <p>
-          <b>Order:</b>
-          ${selectedBill.order_type}
-        </p>
-
-        <p>
-          <b>Table:</b>
-          ${selectedBill.table_number || "-"}
-        </p>
-
-        <p>
-          <b>Payment:</b>
-          ${selectedBill.payment_method || "-"}
-        </p>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Qty</th>
-              <th>Price</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            ${itemsHtml}
-          </tbody>
-        </table>
-
-        <div class="amounts">
-          <div class="row">
-            <span>Subtotal:</span>
-            <b>
-              ₹${
-                Number(selectedBill.grand_total || 0) +
-                Number(selectedBill.discount || 0)
-              }
-            </b>
+        <body>
+          <div class="center">
+            <h1>FOODIES TOWN</h1>
+            <div>Restaurant Bill</div>
           </div>
 
-          <div class="row">
-            <span>Discount:</span>
-            <b>
-              -₹${Number(selectedBill.discount || 0)}
-            </b>
+          <div class="line"></div>
+
+          <p>
+            <b>Bill No:</b>
+            #${selectedBill.bill_number}
+          </p>
+
+          <p>
+            <b>Customer:</b>
+            ${selectedBill.customer_name}
+          </p>
+
+          <p>
+            <b>Mobile:</b>
+            ${selectedBill.customer_mobile || "-"}
+          </p>
+
+          <p>
+            <b>Order:</b>
+            ${selectedBill.order_type}
+          </p>
+
+          <p>
+            <b>Table:</b>
+            ${selectedBill.table_number || "-"}
+          </p>
+
+          <p>
+            <b>Payment:</b>
+            ${selectedBill.payment_method || "-"}
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              ${itemsHtml}
+            </tbody>
+          </table>
+
+          <div class="amounts">
+            <div class="row">
+              <span>Subtotal:</span>
+              <b>₹${subtotalForPrint}</b>
+            </div>
+
+            <div class="row">
+              <span>Discount:</span>
+              <b>
+                -₹${Number(
+                  selectedBill.discount || 0
+                )}
+              </b>
+            </div>
+
+            <div class="row grand">
+              <span>Grand Total:</span>
+              <span>
+                ₹${Number(
+                  selectedBill.grand_total || 0
+                )}
+              </span>
+            </div>
           </div>
 
-          <div class="row grand">
-            <span>Grand Total:</span>
-            <span>
-              ₹${Number(selectedBill.grand_total || 0)}
-            </span>
+          <div class="line"></div>
+
+          <div class="center">
+            Thank you for visiting Foodies Town!
           </div>
-        </div>
-
-        <div class="line"></div>
-
-        <div class="center">
-          Thank you for visiting Foodies Town!
-        </div>
-      </body>
+        </body>
       </html>
     `);
 
@@ -724,17 +943,20 @@ export default function Home(): import("react").JSX.Element {
   }
 
   function formatDate(dateString: string) {
-    return new Date(dateString).toLocaleString("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    return new Date(dateString).toLocaleString(
+      "en-IN",
+      {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }
+    );
   }
 
   return (
-    <main className="min-h-screen bg-slate-100 text-slate-900">
+    <main className="min-h-screen bg-slate-100">
       {/* HEADER */}
 
       <header className="bg-slate-900 text-white shadow-lg">
@@ -993,7 +1215,7 @@ export default function Home(): import("react").JSX.Element {
                       ? "Example: 1"
                       : "Not required"
                   }
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none disabled:bg-slate-100"
+                  className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-orange-500 disabled:bg-slate-100"
                 />
               </div>
 
@@ -1074,6 +1296,7 @@ export default function Home(): import("react").JSX.Element {
                 </h3>
 
                 <button
+                  type="button"
                   onClick={resetItems}
                   className="text-sm font-semibold text-red-600 hover:underline"
                 >
@@ -1091,7 +1314,7 @@ export default function Home(): import("react").JSX.Element {
                         : "border-slate-200 bg-white"
                     }`}
                   >
-                    <div>
+                    <div className="min-w-0 pr-3">
                       <p className="font-bold">
                         {item.name}
                       </p>
@@ -1101,8 +1324,9 @@ export default function Home(): import("react").JSX.Element {
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex shrink-0 items-center gap-2">
                       <button
+                        type="button"
                         onClick={() =>
                           decreaseItem(item.id)
                         }
@@ -1116,6 +1340,7 @@ export default function Home(): import("react").JSX.Element {
                       </span>
 
                       <button
+                        type="button"
                         onClick={() =>
                           increaseItem(item.id)
                         }
@@ -1158,7 +1383,7 @@ export default function Home(): import("react").JSX.Element {
                     key={item.id}
                     className="flex justify-between border-b border-slate-100 pb-3"
                   >
-                    <div>
+                    <div className="pr-3">
                       <p className="font-semibold">
                         {item.name}
                       </p>
@@ -1209,6 +1434,7 @@ export default function Home(): import("react").JSX.Element {
             </div>
 
             <button
+              type="button"
               onClick={saveBill}
               disabled={
                 loading ||
@@ -1222,6 +1448,7 @@ export default function Home(): import("react").JSX.Element {
             </button>
 
             <button
+              type="button"
               onClick={shareCurrentBill}
               disabled={selectedItems.length === 0}
               className="mt-3 w-full rounded-xl bg-green-600 px-5 py-3 font-bold text-white hover:bg-green-700 disabled:opacity-50"
@@ -1252,10 +1479,11 @@ export default function Home(): import("react").JSX.Element {
                   setSearch(e.target.value)
                 }
                 placeholder="Search bill/customer/mobile"
-                className="rounded-xl border border-slate-300 px-4 py-2 text-sm outline-none focus:border-orange-500"
+                className="w-full rounded-xl border border-slate-300 px-4 py-2 text-sm outline-none focus:border-orange-500 md:w-auto"
               />
 
               <button
+                type="button"
                 onClick={() => {
                   loadBills();
                   loadDashboard();
@@ -1329,7 +1557,9 @@ export default function Home(): import("react").JSX.Element {
                       </td>
 
                       <td className="px-4 py-3 text-sm">
-                        {formatDate(bill.created_at)}
+                        {formatDate(
+                          bill.created_at
+                        )}
                       </td>
 
                       <td className="px-4 py-3">
@@ -1366,6 +1596,7 @@ export default function Home(): import("react").JSX.Element {
 
                       <td className="px-4 py-3">
                         <button
+                          type="button"
                           onClick={() =>
                             viewBill(bill)
                           }
@@ -1405,6 +1636,7 @@ export default function Home(): import("react").JSX.Element {
               </div>
 
               <button
+                type="button"
                 onClick={() =>
                   setShowBillModal(false)
                 }
@@ -1513,12 +1745,10 @@ export default function Home(): import("react").JSX.Element {
                   <span className="font-bold">
                     ₹
                     {Number(
-                      selectedBill.grand_total ||
-                        0
+                      selectedBill.grand_total || 0
                     ) +
                       Number(
-                        selectedBill.discount ||
-                          0
+                        selectedBill.discount || 0
                       )}
                   </span>
                 </div>
@@ -1542,8 +1772,7 @@ export default function Home(): import("react").JSX.Element {
                   <span className="text-3xl font-black text-orange-600">
                     ₹
                     {Number(
-                      selectedBill.grand_total ||
-                        0
+                      selectedBill.grand_total || 0
                     )}
                   </span>
                 </div>
@@ -1551,6 +1780,7 @@ export default function Home(): import("react").JSX.Element {
 
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
                 <button
+                  type="button"
                   onClick={printSavedBill}
                   className="rounded-xl bg-slate-900 px-5 py-3 font-bold text-white hover:bg-slate-700"
                 >
@@ -1558,6 +1788,7 @@ export default function Home(): import("react").JSX.Element {
                 </button>
 
                 <button
+                  type="button"
                   onClick={shareSavedBill}
                   className="rounded-xl bg-green-600 px-5 py-3 font-bold text-white hover:bg-green-700"
                 >
@@ -1571,4 +1802,3 @@ export default function Home(): import("react").JSX.Element {
     </main>
   );
 }
-
